@@ -63,7 +63,33 @@
             class="btn btn-primary w-full bg-indigo-600 border-none text-white text-lg h-12">
             Sign In
         </button>
+      <!-- DIVIDER -->
+    <div class="divider my-10 text-gray-400">
+        OR
+    </div>
 
+    <!-- DEMO LOGIN INFO -->
+    <div class="bg-gray-50 p-6 rounded-lg text-center space-y-1">
+        <p class="text-sm text-gray-400 font-medium mb-2">Demo Credentials:</p>
+        <p class="text-gray-700"><strong>Username:</strong> admin</p>
+        <p class="text-gray-700"><strong>Password:</strong> admin123</p>
+    </div>
+
+</div>
+
+<script>
+    document.getElementById('loginForm').addEventListener('submit', (e) => {
+        e.preventDefault();
+        const u = document.getElementById('username').value;
+        const p = document.getElementById('password').value;
+        if (u === 'admin' && p === 'admin123') {
+            localStorage.setItem('loggedIn', 'true');
+            window.location.href = 'index.html';
+        } else {
+            alert('Invalid Credentials');
+        }
+    });
+         </script>
     </form>
     </body>
 </html>
