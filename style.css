@@ -11,3 +11,10 @@
     -webkit-box-orient: vertical;  
     overflow: hidden;
 }
+.issue-card {
+    transition: all 0.3s ease;
+}
+
+.issue-card:hover {
+    transform: translateY(-4px);
+}
