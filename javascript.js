@@ -128,3 +128,65 @@ const displayIssueModal = (issue) => {
 
   document.getElementById("issueModal").showModal();
 };
+// FILTER ISSUES
+window.filterIssues = (status, btn) => {
+  document.querySelectorAll(".tab-btn").forEach((b) => {
+    b.classList.remove("bg-indigo-600", "text-white");
+    b.classList.add("bg-white", "text-slate-600", "border-slate-200");
+  });
+
+  btn.classList.add("bg-indigo-600", "text-white");
+  btn.classList.remove("bg-white", "text-slate-600", "border-slate-200");
+
+  if (status === "all") {
+    displayIssues(masterIssues);
+  } else {
+    const filtered = masterIssues.filter(
+      (i) => i.status.toLowerCase() === status
+    );
+    displayIssues(filtered);
+  }
+};
+
+// SEARCH
+const handleSearch = () => {
+  const text = document.getElementById("searchInput").value.trim();
+
+  if (!text) {
+    displayIssues(masterIssues);
+    return;
+  }
+
+  manageSpinner(true);
+
+  fetch(API_SEARCH + encodeURIComponent(text))
+    .then((res) => res.json())
+    .then((data) => {
+      if (data.data && data.data.length > 0) {
+        displayIssues(data.data);
+      } else {
+        container.innerHTML = `
+            <div class="col-span-full text-center py-20 bg-white rounded-xl border border-dashed border-slate-200">
+                <p class="text-slate-400 font-bold text-lg">
+                    No results found for "${text}"
+                </p>
+                <button onclick="loadIssues()" class="text-indigo-600 underline mt-2">
+                    View All Issues
+                </button>
+            </div>
+        `;
+        document.getElementById("issueCount").innerText = 0;
+      }
+    })
+    .catch((err) => console.error("Search API Error:", err))
+    .finally(() => manageSpinner(false));
+};
+
+// EVENTS
+document.getElementById("searchBtn").addEventListener("click", handleSearch);
+document.getElementById("searchInput").addEventListener("keypress", (e) => {
+  if (e.key === "Enter") handleSearch();
+});
+
+// INITIAL LOAD
+loadIssues();
