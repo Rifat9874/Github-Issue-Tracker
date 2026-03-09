@@ -1,153 +1,56 @@
 <!DOCTYPE html>
 <html lang="en" data-theme="light">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <!-- Title -->
     <title>Login | Issues Tracker</title>
-
-    <!-- Tailwind -->
     <script src="https://cdn.tailwindcss.com"></script>
-
-    <!-- DaisyUI -->
     <link href="https://cdn.jsdelivr.net/npm/daisyui@4.7.2/dist/full.min.css" rel="stylesheet" />
 </head>
-
-
 <body class="bg-white flex items-center justify-center min-h-screen p-4">
-
     <div class="w-full max-w-md border-2 transition-shadow p-10 rounded-xl">
-
         <div class="text-center mb-10">
-
-            <img
-                src="assets/github-logo.png"
-                alt="GitHub"
-                class="w-20 h-20 mx-auto mb-4">
-
-            <h1 class="text-2xl font-bold text-gray-800">
-                GitHub Issues Tracker
-            </h1>
-
-            <p class="text-gray-500">
-                Sign in to manage your issues
-            </p>
-
+            <img src="assets/github-logo.png" alt="GitHub" class="w-20 h-20 mx-auto mb-4">
+            <h1 class="text-2xl font-bold text-gray-800">GitHub Issues Tracker</h1>
+            <p class="text-gray-500">Sign in to manage your issues</p>
         </div>
-
 
         <form id="loginForm" class="space-y-6">
-
-            <!-- USERNAME -->
             <div class="form-control">
-
-                <label class="label font-bold py-1">
-                    Username
-                </label>
-
-                <input
-                    type="text"
-                    id="username"
-                    placeholder="Enter Username"
-                    class="input input-bordered w-full"
-                    required />
-
-                <span class="text-xs text-indigo-600 mt-1">
-                    Default: admin
-                </span>
-
+                <label class="label font-bold py-1">Username</label>
+                <input type="text" id="username" placeholder="Enter Username" class="input input-bordered w-full" required />
+                <span class="text-xs text-indigo-600 mt-1">Default: admin</span>
             </div>
-
-
-            <!-- PASSWORD -->
             <div class="form-control">
-
-                <label class="label font-bold py-1">
-                    Password
-                </label>
-
-                <input
-                    type="password"
-                    id="password"
-                    placeholder="Enter Password"
-                    class="input input-bordered w-full"
-                    required />
-
-                <span class="text-xs text-indigo-600 mt-1">
-                    Default: admin123
-                </span>
-
+                <label class="label font-bold py-1">Password</label>
+                <input type="password" id="password" placeholder="Enter Password" class="input input-bordered w-full" required />
+                <span class="text-xs text-indigo-600 mt-1">Default: admin123</span>
             </div>
-
-
-            <!-- LOGIN BUTTON -->
-            <button
-                class="btn btn-primary w-full bg-indigo-600 border-none text-white text-lg h-12">
-
-                Sign In
-
-            </button>
-
+            <button class="btn btn-primary w-full bg-indigo-600 border-none text-white text-lg h-12">Sign In</button>
         </form>
 
+        <div class="divider my-10 text-gray-400">OR</div>
 
-
-        <!-- DIVIDER -->
-        <div class="divider my-10 text-gray-400">
-            OR
-        </div>
-
-
-
-        <!-- DEMO LOGIN INFO -->
         <div class="bg-gray-50 p-6 rounded-lg text-center space-y-1">
-
-            <p class="text-sm text-gray-400 font-medium mb-2">
-                Demo Credentials:
-            </p>
-
-            <p class="text-gray-700">
-                <strong>Username:</strong> admin
-            </p>
-
-            <p class="text-gray-700">
-                <strong>Password:</strong> admin123
-            </p>
-
+            <p class="text-sm text-gray-400 font-medium mb-2">Demo Credentials:</p>
+            <p class="text-gray-700"><strong>Username:</strong> admin</p>
+            <p class="text-gray-700"><strong>Password:</strong> admin123</p>
         </div>
-
     </div>
 
-
-
     <script>
+        document.getElementById('loginForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const u = document.getElementById('username').value;
+            const p = document.getElementById('password').value;
 
-        document
-            .getElementById('loginForm')
-            .addEventListener('submit', (e) => {
-
-                e.preventDefault();
-
-                const u = document.getElementById('username').value;
-                const p = document.getElementById('password').value;
-
-                if (u === 'admin' && p === 'admin123') {
-
-                    localStorage.setItem('loggedIn', 'true');
-
-                    window.location.href = 'index.html';
-
-                } else {
-
-                    alert('Invalid Credentials');
-
-                }
-
-            });
-
+            if (u === 'admin' && p === 'admin123') {
+                localStorage.setItem('loggedIn', 'true');
+                window.location.href = 'index.html'; 
+            } else {
+                alert('Invalid Credentials');
+            }
+        });
     </script>
-
 </body>
 </html>
