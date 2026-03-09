@@ -1,5 +1,5 @@
 if (!localStorage.getItem("loggedIn")) {
-  window.location.href = "index.html";
+    window.location.href = "index.html";
 }
 
 // API
@@ -16,68 +16,70 @@ const container = document.getElementById("issuesContainer");
 
 // SPINNER CONTROL
 const manageSpinner = (status) => {
-  const loading = document.getElementById("loading");
+    const loading = document.getElementById("loading");
 
-  if (status == true) {
-    loading.classList.remove("hidden");
-    container.innerHTML = "";
-  } else {
-    loading.classList.add("hidden");
-  }
+    if (status == true) {
+        if (loading) loading.classList.remove("hidden"); // check if exists
+        if (container) container.innerHTML = "";
+    } else {
+        if (loading) loading.classList.add("hidden");
+    }
 };
 
 
 // LOAD ALL ISSUES
 const loadIssues = () => {
-  manageSpinner(true);
+    manageSpinner(true);
 
-  fetch(API_ALL)
-    .then((res) => res.json())
-    .then((data) => {
-      setTimeout(() => {
-        masterIssues = data.data || [];
-        displayIssues(masterIssues);
-        manageSpinner(false);
-      }, 2000); // 2 second delay
-    })
-    .catch((err) => {
-      console.error("Fetch error:", err);
-      manageSpinner(false);
-    });
+    fetch(API_ALL)
+        .then((res) => res.json())
+        .then((data) => {
+            setTimeout(() => {
+                masterIssues = data.data || [];
+                displayIssues(masterIssues);
+                manageSpinner(false);
+            }, 2000); // 2 second delay
+        })
+        .catch((err) => {
+            console.error("Fetch error:", err);
+            manageSpinner(false);
+        });
 };
 
 
 // DISPLAY ALL CARDS
 const displayIssues = (issues) => {
 
-  container.innerHTML = "";
+    if (!container) return; // safety check
+    container.innerHTML = "";
 
-  document.getElementById("issueCount").innerText = issues.length;
+    const countEl = document.getElementById("issueCount");
+    if (countEl) countEl.innerText = issues.length;
 
-  issues.forEach((issue) => {
+    issues.forEach((issue) => {
 
-    const isClosed = issue.status.toLowerCase() === "closed";
-    const statusClass = isClosed ? "card-closed" : "card-open";
+        const isClosed = issue.status.toLowerCase() === "closed";
+        const statusClass = isClosed ? "card-closed" : "card-open";
 
-    const statusImg = isClosed
-      ? "assets/Closed- Status .png"
-      : "assets/Open-Status.png";
+        const statusImg = isClosed
+            ? "assets/Closed- Status .png"
+            : "assets/Open-Status.png";
 
-    const p = issue.priority.toLowerCase();
+        const p = issue.priority.toLowerCase();
 
-    let priorityClass = "bg-slate-100 text-slate-400";
+        let priorityClass = "bg-slate-100 text-slate-400";
 
-    if (p === "high") priorityClass = "bg-red-50 text-red-400";
-    if (p === "medium") priorityClass = "bg-orange-50 text-orange-400";
+        if (p === "high") priorityClass = "bg-red-50 text-red-400";
+        if (p === "medium") priorityClass = "bg-orange-50 text-orange-400";
 
-    const card = document.createElement("div");
+        const card = document.createElement("div");
 
-    card.className =
-      `bg-white p-6 rounded-lg border border-slate-200 border-t-4 shadow-sm cursor-pointer issue-card ${statusClass} flex flex-col justify-between`;
+        card.className =
+            `bg-white p-6 rounded-lg border border-slate-200 border-t-4 shadow-sm cursor-pointer issue-card ${statusClass} flex flex-col justify-between`;
 
-    card.onclick = () => loadIssueDetails(issue._id || issue.id);
+        card.onclick = () => loadIssueDetails(issue._id || issue.id);
 
-    card.innerHTML = `
+        card.innerHTML = `
         <div>
             <div class="flex justify-between items-center mb-4">
                 <img src="${statusImg}" class="w-5 h-5">
@@ -107,11 +109,11 @@ const displayIssues = (issues) => {
         </div>
     `;
 
-    container.append(card);
+        container.append(card);
 
-  });
+    });
 
-  manageSpinner(false);
+    manageSpinner(false);
 };
 
 
@@ -119,27 +121,27 @@ const displayIssues = (issues) => {
 // LOAD SINGLE ISSUE DETAILS
 const loadIssueDetails = async (id) => {
 
-  const res = await fetch(API_SINGLE + id);
-  const data = await res.json();
+    const res = await fetch(API_SINGLE + id);
+    const data = await res.json();
 
-  displayIssueModal(data.data);
+    displayIssueModal(data.data);
 };
 
 
 // DISPLAY MODAL
 const displayIssueModal = (issue) => {
 
-  document.getElementById("modalTitle").innerText = issue.title;
+    document.getElementById("modalTitle").innerText = issue.title;
 
-  document.getElementById("modalDesc").innerText = issue.description;
+    document.getElementById("modalDesc").innerText = issue.description;
 
-  document.getElementById("modalAssignee").innerText = issue.author;
+    document.getElementById("modalAssignee").innerText = issue.author;
 
-  const isClosed = issue.status.toLowerCase() === "closed";
+    const isClosed = issue.status.toLowerCase() === "closed";
 
-  const statusBg = isClosed ? "bg-purple-500" : "bg-emerald-500";
+    const statusBg = isClosed ? "bg-purple-500" : "bg-emerald-500";
 
-  document.getElementById("modalMeta").innerHTML = `
+    document.getElementById("modalMeta").innerHTML = `
         <span class="${statusBg} text-white px-3 py-1 rounded-md text-[11px] font-bold mr-2 uppercase">
             ${issue.status}
         </span>
@@ -149,21 +151,21 @@ const displayIssueModal = (issue) => {
         </span>
     `;
 
-  const badge = document.getElementById("modalPriority");
+    const badge = document.getElementById("modalPriority");
 
-  badge.innerText = issue.priority.toUpperCase();
+    badge.innerText = issue.priority.toUpperCase();
 
-  const p = issue.priority.toLowerCase();
+    const p = issue.priority.toLowerCase();
 
-  let pColor = "bg-slate-400";
+    let pColor = "bg-slate-400";
 
-  if (p === "high") pColor = "bg-red-500";
-  if (p === "medium") pColor = "bg-orange-400";
+    if (p === "high") pColor = "bg-red-500";
+    if (p === "medium") pColor = "bg-orange-400";
 
-  badge.className =
-    `px-4 py-1 rounded-md text-[10px] font-bold text-white uppercase ${pColor}`;
+    badge.className =
+        `px-4 py-1 rounded-md text-[10px] font-bold text-white uppercase ${pColor}`;
 
-  document.getElementById("issueModal").showModal();
+    document.getElementById("issueModal").showModal();
 };
 
 
@@ -171,50 +173,52 @@ const displayIssueModal = (issue) => {
 // FILTER ISSUES
 window.filterIssues = (status, btn) => {
 
-  document.querySelectorAll(".tab-btn").forEach((b) => {
-    b.classList.remove("bg-indigo-600", "text-white");
-    b.classList.add("bg-white", "text-slate-600", "border-slate-200");
-  });
+    document.querySelectorAll(".tab-btn").forEach((b) => {
+        b.classList.remove("bg-indigo-600", "text-white");
+        b.classList.add("bg-white", "text-slate-600", "border-slate-200");
+    });
 
-  btn.classList.add("bg-indigo-600", "text-white");
-  btn.classList.remove("bg-white", "text-slate-600", "border-slate-200");
+    btn.classList.add("bg-indigo-600", "text-white");
+    btn.classList.remove("bg-white", "text-slate-600", "border-slate-200");
 
-  if (status === "all") {
-    displayIssues(masterIssues);
-  } else {
+    if (status === "all") {
+        displayIssues(masterIssues);
+    } else {
 
-    const filtered = masterIssues.filter(
-      (i) => i.status.toLowerCase() === status
-    );
+        const filtered = masterIssues.filter(
+            (i) => i.status.toLowerCase() === status
+        );
 
-    displayIssues(filtered);
-  }
+        displayIssues(filtered);
+    }
 };
 
 
 // SEARCH
 const handleSearch = () => {
 
-  const text = document.getElementById("searchInput").value.trim();
+    const textInput = document.getElementById("searchInput");
+    if (!textInput) return;
+    const text = textInput.value.trim();
 
-  if (!text) {
-    displayIssues(masterIssues);
-    return;
-  }
+    if (!text) {
+        displayIssues(masterIssues);
+        return;
+    }
 
-  manageSpinner(true);
+    manageSpinner(true);
 
-  fetch(API_SEARCH + encodeURIComponent(text))
-    .then((res) => res.json())
-    .then((data) => {
+    fetch(API_SEARCH + encodeURIComponent(text))
+        .then((res) => res.json())
+        .then((data) => {
 
-      if (data.data && data.data.length > 0) {
+            if (data.data && data.data.length > 0) {
 
-        displayIssues(data.data);
+                displayIssues(data.data);
 
-      } else {
+            } else {
 
-        container.innerHTML = `
+                container.innerHTML = `
             <div class="col-span-full text-center py-20 bg-white rounded-xl border border-dashed border-slate-200">
                 <p class="text-slate-400 font-bold text-lg">
                     No results found for "${text}"
@@ -226,26 +230,29 @@ const handleSearch = () => {
             </div>
         `;
 
-        document.getElementById("issueCount").innerText = 0;
-      }
+                const countEl = document.getElementById("issueCount");
+                if (countEl) countEl.innerText = 0;
+            }
 
-    })
-    .catch((err) => console.error("Search API Error:", err))
-    .finally(() => manageSpinner(false));
+        })
+        .catch((err) => console.error("Search API Error:", err))
+        .finally(() => manageSpinner(false));
 };
 
 
 
 // EVENTS
-document
-  .getElementById("searchBtn")
-  .addEventListener("click", handleSearch);
+const searchBtn = document.getElementById("searchBtn");
+if (searchBtn) {
+    searchBtn.addEventListener("click", handleSearch);
+}
 
-document
-  .getElementById("searchInput")
-  .addEventListener("keypress", (e) => {
-    if (e.key === "Enter") handleSearch();
-  });
+const searchInput = document.getElementById("searchInput");
+if (searchInput) {
+    searchInput.addEventListener("keypress", (e) => {
+        if (e.key === "Enter") handleSearch();
+    });
+}
 
 
 // INITIAL LOAD
