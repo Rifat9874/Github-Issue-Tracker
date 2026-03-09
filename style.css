@@ -18,3 +18,14 @@
 .issue-card:hover {
     transform: translateY(-4px);
 }
+.card-open {
+    border-top: 4px solid #10b981 !important; 
+}
+
+.card-closed {
+    border-top: 4px solid #a855f7 !important; 
+}
+
+.modal-box {
+    border: 1px solid #f1f5f9;
+}
