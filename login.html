@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Title -->
+    <title>Dashboard - GitHub Issues Tracker</title>
+
+    <!-- Tailwind -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- DaisyUI -->
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@4.7.2/dist/full.min.css" rel="stylesheet" />
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/style.css">
+</head>
+
+<body class="bg-slate-50 min-h-screen pb-10">
+
+    <nav class="bg-white border-b border-gray-100 px-6 py-3 flex justify-between items-center sticky top-0 z-50">
+
+        <!-- Logo -->
+        <div class="flex items-center gap-2">
+            <img src="assets/github-logo.png" class="w-8 h-8" alt="Logo">
+            <span class="font-bold text-xl hidden sm:inline text-slate-800">
+                GitHub Issues Tracker
+            </span>
+        </div>
+
+        <!-- Search + New Issue -->
+        <div class="flex gap-2">
+
+            <div class="join border border-gray-200 rounded-lg overflow-hidden">
+
+                <input
+                    id="searchInput"
+                    class="input input-sm join-item w-32 sm:w-64 border-none focus:outline-none"
+                    placeholder="Search issues..." />
+
+                <button
+                    id="searchBtn"
+                    class="btn btn-sm join-item bg-white border-none hover:bg-gray-50">
+                    🔍
+                </button>
+
+            </div>
+
+            <button class="btn btn-sm bg-indigo-600 hover:bg-indigo-700 border-none text-white px-5 rounded-lg">
+                + New Issue
+            </button>
+
+        </div>
+
+    </nav>
+</body>
+</html>
